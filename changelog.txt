@@ -1,0 +1,24 @@
+0.1 - init
+	Features Added:
+		* Ability to create a password with settings
+		
+		* Settings
+			- These are available BUT the only way to change them is to edit the source code
+		
+		* Settings available:
+			- Length
+			- LowerCase
+			- UpperCase
+			- Numbers
+
+0.2 - Added Symbols!
+	
+	+ Symbols were previously bugged but now you can add symbols to your password
+	+ Added a settings view menu where you can see which settings are enabled/disabled
+	+ Small cosmetic changes in spacing
+	~ Still no way of editing the settings
+	
+0.3 - Settings and Changelog
+	+ Added a way to change settings within the app
+	+ Added changelog
+	~ Still no way of viewing changelog within the app
