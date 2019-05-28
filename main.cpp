@@ -1,8 +1,9 @@
 #include <iostream>
 #include <time.h>
 #include <stdlib.h>
+#include <fstream>
+#include <iomanip>
 //#include <ncurses.h>
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 //TODO: ncurses implementation and changelog
 
@@ -40,7 +41,7 @@ void init();
 void viewChangeLog(settings x, char* customPass);
 
 void titleSetup(){
-	std::cout << "Password Generator version 0.3 \t\t\t\t\t\t\t\t\t\tPress q to quit." << std::endl;
+	std::cout << "Password Generator version 0.4" << std::setw(90) << "Press q to quit" << std::endl;
 	std::cout << "Created by John Skilitis" << std::endl;
 }
 
@@ -156,8 +157,7 @@ void settingsDisplay(settings x, char* customPass){
 	system("CLS");
 	char reply;
 	
-	std::cout << "Press 1-5 to change a setting\n" << std::endl;
-	std::cout << "Press q to return to main menu\n\n" << std::endl;
+	std::cout << "Press 1-5 to change a setting" << std::setw(91) << "Press q to quit\n" << std::endl;
 	std::cout << "1. Password Length = " << x.length << std::endl;
 	std::cout << "2. Contains Lowercase Letters = " << x.hasLowerCase << std::endl;
 	std::cout << "3. Contains Uppercase Letters = " << x.hasUpperCase << std::endl;
@@ -175,9 +175,19 @@ void settingsDisplay(settings x, char* customPass){
 
 void viewChangeLog(settings x, char* customPass){
 	system("CLS");
-	std::cout << "Press q to quit" << std::endl;
-	std::cout << std::string(5, '\n');
-	std::cout << "We Changed Things!" << std::endl;
+	std::cout << std::setw(121) <<"Press q to quit\n" << std::endl;
+	
+   	std::string buff;
+	std::ifstream changeLog("changelog.txt");
+	if(changeLog.is_open()){
+		while(std::getline(changeLog,buff)){
+			std::cout << buff << '\n';
+		}
+		changeLog.close();
+	}
+	else
+		std::cout << "Unable to open file" << std::endl;
+
 	char reply;
 	std::cin >> reply;
 	if(reply == 'q'){

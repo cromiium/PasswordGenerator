@@ -22,3 +22,8 @@
 	+ Added a way to change settings within the app
 	+ Added changelog
 	~ Still no way of viewing changelog within the app
+
+0.4 - Formatting and Changelog
+	+ Made formatting nicer and more consistent
+		* Whitespace is a lot more consistent through the menus
+	+ Added way to view changelog from within the app
