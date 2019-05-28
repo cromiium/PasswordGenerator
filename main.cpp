@@ -5,7 +5,7 @@
 #include <iomanip>
 //#include <ncurses.h>
 
-//TODO: ncurses implementation and changelog
+//TODO: ncurses implementation, multiple password output, and password management 
 
 #define MAX 94
 char const lowerCase[26] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 
