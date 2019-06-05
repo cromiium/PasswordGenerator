@@ -3,9 +3,10 @@
 #include <stdlib.h>
 #include <fstream>
 #include <iomanip>
+#include <string>
 //#include <ncurses.h>
 
-//TODO: ncurses implementation, multiple password output, and password management 
+//TODO: ncurses implementation and a way to view decrypted passwords
 
 #define MAX 94
 char const lowerCase[26] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 
@@ -39,9 +40,13 @@ void settingsDisplay(settings x, char* customPass);
 void menuDisplay(settings x, char* customPass);
 void init();
 void viewChangeLog(settings x, char* customPass);
+bool userNameCheck(char* userName);
+bool webSiteCheck(char* webSiteCheck);
+void storePassword(settings x, char* customPass);
+std::string encrypt(settings x, char* customPass);
 
 void titleSetup(){
-	std::cout << "Password Generator version 0.4" << std::setw(90) << "Press q to quit" << std::endl;
+	std::cout << "Password Generator version 0.5" << std::setw(90) << "Press q to quit" << std::endl;
 	std::cout << "Created by John Skilitis" << std::endl;
 }
 
@@ -86,18 +91,23 @@ void makePassword(settings x, char* customPass){
 		int temp = rand() % (arrayLength-1) +1;
 		customPass[i] = alphabet[temp];
 	}
+	char reply;
 	std::cout << customPass << std::endl;
 	std::cout << std::string(5, '\n');
+	std::cout << "Press y to associate this password with an account" << std::endl;
+	std::cout << std::string(5,'\n');
 	std::cout << "Press q to quit \nPress r to make a new password" << std::endl;
-	
-	char reply;
 	std::cin >> reply;
-	
-	if(reply == 'r')
-		makePassword(x, customPass);
-	else if(reply == 'q')
+
+	if(reply == 'y'){
+		storePassword(x, customPass);
+	}
+	else if(reply == 'q'){
 		menuDisplay(x, customPass);
-	
+	}
+	else if(reply == 'r'){
+		makePassword(x, customPass);
+	}
 }
 
 void changeSettings(settings x, char option, char* customPass){
@@ -216,6 +226,78 @@ void menuDisplay(settings x, char* customPass){
     		return;
 	}
 }
+
+std::string encrypt(settings x, char* customPass){
+	std::string encryptedPass;
+	for(int i = 0; i < x.length; i++){
+		customPass[i] = customPass[i]+2;
+	}
+	std::cout << customPass;
+	return customPass;
+}
+
+bool userNameCheck(std::string userName){
+	std::cout << "Is " << userName << " correct (y/n)?\n";
+	char reply;
+	std::cin >> reply;
+	if(reply == 'y'){
+		return true;
+	}
+	else if(reply == 'n'){
+		return false;
+	}
+}
+
+bool webSiteCheck(std::string webSite){
+	std::cout << "Is " << webSite << " correct (y/n)?\n";
+	char reply;
+	std::cin >> reply;
+	if(reply == 'y'){
+		return true;
+	}
+	else if(reply == 'n'){
+		return false;	
+	}
+}
+
+void storePassword(settings x, char* customPass){
+	system("CLS");
+	std::ofstream passwordCache("cache.txt", std::ios::app);
+	if(passwordCache.is_open()){
+		std::string userName;
+		std::string webSite;
+		std::cout << "Enter username you want associated with this password: ";
+		std::cin >> userName;
+		std::cout << "Enter website you want associated with this account";
+		std::cin >> webSite;		
+		std::cout << std::endl;
+		if(userNameCheck(userName) && webSiteCheck(webSite)){
+			passwordCache << webSite << ' ' << userName << ' ' << encrypt(x, customPass) << '\n';
+			passwordCache.close();	
+		}
+		else{
+			storePassword(x, customPass);
+		}
+	
+	}
+	else{
+		std::cout << "Unable to open file \"cache.txt\"" << std::endl;
+		return;
+	}
+	
+	char reply;
+	std::cout << std::string(5,'\n');
+	std::cout << "Press q to quit \nPress r to make a new password" << std::endl;
+	std::cin >> reply;
+	
+	if(reply == 'q'){
+		menuDisplay(x, customPass);
+	}
+	else if(reply == 'r'){
+		makePassword(x, customPass);
+	}
+}
+
 
 
 void init(){

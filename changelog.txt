@@ -27,3 +27,8 @@
 	+ Made formatting nicer and more consistent
 		* Whitespace is a lot more consistent through the menus
 	+ Added way to view changelog from within the app
+	
+0.5 - Password Management
+	+ Added a way to store passwords
+	+ Added a function to encrypt passwords
+	~ No way to see passwords decrypted
