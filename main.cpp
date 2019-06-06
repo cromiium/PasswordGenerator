@@ -232,7 +232,13 @@ std::string encrypt(settings x, char* customPass){
 	for(int i = 0; i < x.length; i++){
 		customPass[i] = customPass[i]+2;
 	}
-	std::cout << customPass;
+	return customPass;
+}
+
+std::string decrypt(settings x, char* customPass){
+	for(int i = 0; i < x.length; i++){
+		customPass[i] = customPass[i]-2;
+	}
 	return customPass;
 }
 
